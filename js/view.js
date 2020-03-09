@@ -172,46 +172,55 @@
 
 	View.prototype.bind = function (event, handler) {
 		var self = this;
-		if (event === 'newTodo') {
-			$on(self.$newTodo, 'change', function () {
-				handler(self.$newTodo.value);
-			});
+    switch (event) {
+      case 'newTodo':
+        $on(self.$newTodo, 'change', function () {
+          handler(self.$newTodo.value);
+        });
+        break;
 
-		} else if (event === 'removeCompleted') {
-			$on(self.$clearCompleted, 'click', function () {
-				handler();
-			});
+      case 'removeCompleted':
+        $on(self.$clearCompleted, 'click', function () {
+          handler();
+        });
+        break;
 
-		} else if (event === 'toggleAll') {
-			$on(self.$toggleAll, 'click', function () {
-				handler({completed: this.checked});
-			});
+      case 'toggleAll':
+        $on(self.$toggleAll, 'click', function () {
+          handler({completed: this.checked});
+        });
+        break;
 
-		} else if (event === 'itemEdit') {
-			$delegate(self.$todoList, 'li label', 'dblclick', function () {
-				handler({id: self._itemId(this)});
-			});
+      case 'itemEdit':
+        $delegate(self.$todoList, 'li label', 'dblclick', function () {
+          handler({id: self._itemId(this)});
+        });
+        break;
 
-		} else if (event === 'itemRemove') {
-			$delegate(self.$todoList, '.destroy', 'click', function () {
-				handler({id: self._itemId(this)});
-			});
+      case 'itemRemove':
+        $delegate(self.$todoList, '.destroy', 'click', function () {
+          handler({id: self._itemId(this)});
+        });
+        break;
 
-		} else if (event === 'itemToggle') {
-			$delegate(self.$todoList, '.toggle', 'click', function () {
-				handler({
-					id: self._itemId(this),
-					completed: this.checked
-				});
-			});
+      case 'itemToggle':
+        $delegate(self.$todoList, '.toggle', 'click', function () {
+          handler({
+            id: self._itemId(this),
+            completed: this.checked
+          });
+        });
+        break;
 
-		} else if (event === 'itemEditDone') {
-			self._bindItemEditDone(handler);
+      case 'itemEditDone':
+        self._bindItemEditDone(handler);
+        break;
 
-		} else if (event === 'itemEditCancel') {
-			self._bindItemEditCancel(handler);
-		}
-	};
+      case 'itemEditCancel':
+        self._bindItemEditCancel(handler);
+        break;
+    }
+  };
 
 	// Export to window
 	window.app = window.app || {};

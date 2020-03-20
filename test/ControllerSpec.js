@@ -97,28 +97,24 @@ describe('controller', function () {
       subject.setView('#/active');
 
       //-- We expect the model to call "read" with "completed: false" parameter to go fetch uncompleted todos in db
-      expect(model.read).
-          toHaveBeenCalledWith({ completed: false}, jasmine.any(Function)); //--we expect a function as second parameters (callback)
+      expect(model.read).toHaveBeenCalledWith({ completed: false}, jasmine.any(Function)); //--we expect a function as second parameters (callback)
 
       //--We expect the view to call "render" with the "showEntries" paramaters for displaying todos
       expect(view.render).toHaveBeenCalledWith('showEntries', [todo]);
     });
 
 		it('should show completed entries', function () {
-//--Create a fake todo to be the model and set it to be completed
-            var todo = {title: 'my todo', completed: true};
+      //--Create a fake todo to be the model and set it to be completed
+      var todo = {title: 'my todo', completed: true};
       setUpModel([todo]);
 
       //--If we tell the controller to set the view with the "completed" option
       subject.setView('#/completed');
 
-            //-- We expect the model to call "read" with "completed: true" parameter to go fetch completed todos in db
-      expect(model.read).
-          toHaveBeenCalledWith({
-            completed: true
-        }, jasmine.any(Function)); //--we expect a function as second parameters (callback)
+      //-- We expect the model to call "read" with "completed: true" parameter to go fetch completed todos in db
+      expect(model.read).toHaveBeenCalledWith({completed: true}, jasmine.any(Function)); //--we expect a function as second parameters (callback)
 
-            //--We expect the view to call "render" with the "showEntries" paramaters for displaying todos
+      //--We expect the view to call "render" with the "showEntries" paramaters for displaying todos
       expect(view.render).toHaveBeenCalledWith('showEntries', [todo]);
     });
   });
@@ -166,7 +162,11 @@ describe('controller', function () {
 	});
 
 	it('should highlight "All" filter by default', function () {
-		// TODO: write test
+    //-- if we set the view with no parameters
+    subject.setView('');
+
+    //-- We expect the view to call setFilter with no parameters (empty string) for targeting the All button (with qs)
+    expect(view.render).toHaveBeenCalledWith('setFilter', '');
 	});
 
 	it('should highlight "Active" filter when switching to active view', function () {

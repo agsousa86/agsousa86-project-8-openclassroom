@@ -170,7 +170,11 @@ describe('controller', function () {
 	});
 
 	it('should highlight "Active" filter when switching to active view', function () {
-		// TODO: write test
+    //-- if we set the view with the active parameter
+    subject.setView('#/active');
+
+    //-- We expect the view to call setFilter with "active" parameters for targeting the Active button (with qs)
+    expect(view.render).toHaveBeenCalledWith('setFilter', 'active');
 	});
 
 	describe('toggle all', function () {

@@ -105,9 +105,23 @@ describe('controller', function () {
     });
 
 		it('should show completed entries', function () {
-			// TODO: write test
-		});
-	});
+//--Create a fake todo to be the model and set it to be completed
+            var todo = {title: 'my todo', completed: true};
+      setUpModel([todo]);
+
+      //--If we tell the controller to set the view with the "completed" option
+      subject.setView('#/completed');
+
+            //-- We expect the model to call "read" with "completed: true" parameter to go fetch completed todos in db
+      expect(model.read).
+          toHaveBeenCalledWith({
+            completed: true
+        }, jasmine.any(Function)); //--we expect a function as second parameters (callback)
+
+            //--We expect the view to call "render" with the "showEntries" paramaters for displaying todos
+      expect(view.render).toHaveBeenCalledWith('showEntries', [todo]);
+    });
+  });
 
 	it('should show the content block when todos exists', function () {
 		setUpModel([{title: 'my todo', completed: true}]);

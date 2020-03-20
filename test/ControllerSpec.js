@@ -62,7 +62,9 @@ describe('controller', function () {
     var todo = {title: 'my todo'};
     expect(todo).toBeDefined();
     setUpModel([todo]);
-    subject.setView('');
+    subject.setView('');  //--If we tell the controller to set the view without options (completed, active)
+
+   //--We expect the view to call "render" with the "showEntries" paramaters for displaying todos
     expect(view.render).toHaveBeenCalledWith('setFilter', '');
     expect(view.render).toHaveBeenCalledWith('showEntries', [todo]);
 	});
@@ -88,8 +90,19 @@ describe('controller', function () {
 		});
 
 		it('should show active entries', function () {
-			// TODO: write test
-		});
+      var todo = {title: 'my todo', active: true};
+      setUpModel([todo]);
+
+      //--If we tell the controller to set the view with the 'active' option
+      subject.setView('#/active');
+
+      //-- We expect the model to call "read" with "completed: false" parameter to go fetch uncompleted todos in db
+      expect(model.read).
+          toHaveBeenCalledWith({ completed: false}, jasmine.any(Function)); //--we expect a function as second parameters (callback)
+
+      //--We expect the view to call "render" with the "showEntries" paramaters for displaying todos
+      expect(view.render).toHaveBeenCalledWith('showEntries', [todo]);
+    });
 
 		it('should show completed entries', function () {
 			// TODO: write test

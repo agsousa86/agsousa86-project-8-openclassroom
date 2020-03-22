@@ -179,7 +179,19 @@ describe('controller', function () {
 
 	describe('toggle all', function () {
 		it('should toggle all todos to completed', function () {
-			// TODO: write test
+		//-- creating two todos for multiple "completed" test
+      var todos = [{id: 1, title: 'my first todo', completed: false}, {id: 2, title: 'my second todo', completed: false}];
+      setUpModel(todos);
+
+    //-- setting the view on main page
+    subject.setView('');
+
+    //-- if we click on the "complete all task" button
+    view.trigger('toggleAll', {completed: true});
+
+    //-- we expecteach of the todos to updates with their "completed" attributes to be changed to "true"
+    expect(model.update).toHaveBeenCalledWith(1, {completed: true}, jasmine.any(Function));
+    expect(model.update).toHaveBeenCalledWith(2, {completed: true}, jasmine.any(Function));
 		});
 
 		it('should update the view', function () {

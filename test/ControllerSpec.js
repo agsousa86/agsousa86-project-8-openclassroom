@@ -214,7 +214,14 @@ describe('controller', function () {
 
 	describe('new todo', function () {
 		it('should add a new todo to the model', function () {
-			// TODO: write test
+      //-- setting the view on main page
+      subject.setView('');
+
+      //-- if we create a new todo in our input
+      view.trigger('newTodo', 'a new todo');
+
+      //-- We expect the model to create a new todo with the inout value as title
+      expect(model.create).toHaveBeenCalledWith('a new todo',jasmine.any(Function));
 		});
 
 		it('should add a new todo to the view', function () {

@@ -195,7 +195,20 @@ describe('controller', function () {
 		});
 
 		it('should update the view', function () {
-			// TODO: write test
+      //-- creating two todos for multiple "completed" test
+      var todos = [{id: 3, title: 'my first todo', completed: false}, {id: 4, title: 'my second todo', completed: false}];
+      setUpModel(todos);
+
+      //-- setting the view on main page
+      subject.setView('');
+
+      //-- if we click on the "complete all task" button
+      view.trigger('toggleAll', {completed: true});
+
+      //-- we expect the todo's "completed" attribute to be "true"
+      expect(view.render).toHaveBeenCalledWith('elementComplete', {id: 3, completed: true});
+      expect(view.render).toHaveBeenCalledWith('elementComplete', {id: 4, completed: true});
+
 		});
 	});
 

@@ -261,7 +261,18 @@ describe('controller', function () {
 
 	describe('element removal', function () {
 		it('should remove an entry from the model', function () {
-			// TODO: write test
+
+      //-- Create a fake todo to be the model with fake data and set it to be completed
+      var todo = {id: 6, title: 'my todo', completed: true};
+      setUpModel([todo]);
+
+      subject.setView('');
+
+      //-- if we dispatch the "itemRemove" event (by clicking on the cross)
+      view.trigger('itemRemove', {id: 6});
+
+      //-- we expect the model with the id 42 to be removed from db
+      expect(model.remove).toHaveBeenCalledWith(6,jasmine.any(Function));
 		});
 
 		it('should remove an entry from the view', function () {
